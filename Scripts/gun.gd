@@ -6,6 +6,7 @@ signal ammo_changed(ammo_amount, reserve_amount)
 @export var reserved_ammo: int = 30
 @export var max_usable_ammo: int = 15
 @export var max_reserved_ammo: int = 120
+@export var infinite_ammo: bool = true
 
 @onready var marker_2d: Marker2D = $Marker2D
 @onready var shoot_timer: Timer = $ShootTimer
@@ -20,8 +21,11 @@ var can_reload = true
 
 func _ready() -> void:
 	shoot_timer.wait_time = time_between_shot
+	if infinite_ammo:
+		reserved_ammo = 99999
+		max_reserved_ammo = 99999
 
-func _physics_process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("shoot") and can_shoot:
 		shoot()
 		can_shoot = false
@@ -60,7 +64,8 @@ func reload():
 	var ammo_to_reload = min(ammo_needed, reserved_ammo)
 
 	usable_ammo += ammo_to_reload
-	reserved_ammo -= ammo_to_reload
+	if !infinite_ammo:
+		reserved_ammo -= ammo_to_reload
 
 	emit_signal("ammo_changed", usable_ammo, reserved_ammo)
 

@@ -24,6 +24,14 @@ var can_dash = true
 @onready var dash_again_timer: Timer = $DashAgainTimer
 @onready var gun: Node2D = $RotationOffset/Gun
 
+@onready var invicibility_timer: Timer = $InvicibilityTimer
+@onready var hurtbox: Hurtbox = $Hurtbox
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var shaker = Shaker.new(animated_sprite_2d)
+
+func _ready() -> void:
+	add_to_group("player")
+
 func _physics_process(delta: float) -> void:
 	
 	var x_input = Input.get_axis("left", "right")
@@ -79,14 +87,23 @@ func apply_gravity(delta) -> void:
 		else:
 			velocity.y += down_gravity * delta
 
-func hurt() -> void:
-	health_points -= 10
-	if health_points <= 0:
-		print("u are ded")
-		emit_signal("game_over")
-
 func _on_dash_timer_timeout() -> void:
 	dashing = false
 
 func _on_dash_again_timer_timeout() -> void:
 	can_dash = true
+
+func _on_hurtbox_hurt(other_hitbox: Hitbox) -> void:
+	hurtbox.is_invincible = true
+	shaker.shake(2, 0.5)
+	animation_player.play("hit_flash")
+	invicibility_timer.start()
+	health_points -= other_hitbox.damage
+	health_change.emit(health_points)
+	if health_points <= 0:
+		print("u are ded")
+		emit_signal("game_over")
+		queue_free()
+
+func _on_invicibility_timer_timeout() -> void:
+	hurtbox.is_invincible = false

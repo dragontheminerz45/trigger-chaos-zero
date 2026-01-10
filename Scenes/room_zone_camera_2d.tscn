@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbs7tthy3qhkb"]
+
+[ext_resource type="Script" uid="uid://b3wo82ofdhcbm" path="res://Scripts/room_zone_camera_2d.gd" id="1_dwgml"]
+
+[node name="RoomZoneCamera2D" type="Camera2D"]
+process_callback = 0
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("1_dwgml")

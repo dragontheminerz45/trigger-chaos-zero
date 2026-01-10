@@ -6,13 +6,13 @@ extends CharacterBody2D
 		if value is not Stats: return
 		stats = stats.duplicate()
 
-@export var player = preload("res://Scenes/player.tscn")
-
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
-@onready var shaker = Shaker.new(sprite_2d)
+@onready var shaker = Shaker.new(animated_sprite_2d)
+
+signal defeated()
 
 func _ready() -> void:
 	hurtbox.hurt.connect(func(other_hitbox: Hitbox):
@@ -21,5 +21,6 @@ func _ready() -> void:
 		shaker.shake(2, 0.2)
 	)
 	stats.no_health.connect(func():
+		defeated.emit()
 		queue_free()
 	)
