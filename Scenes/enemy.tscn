@@ -1,15 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cunke6kopf13v"]
+[gd_scene load_steps=9 format=3 uid="uid://cunke6kopf13v"]
 
 [ext_resource type="Script" uid="uid://521ucdqin6o8" path="res://Scripts/enemy.gd" id="1_1f0kj"]
-[ext_resource type="Script" uid="uid://ca8ippthsnrnx" path="res://Resources/stats.gd" id="2_0830c"]
 [ext_resource type="Script" uid="uid://hjcul83e4hj" path="res://Scripts/hurtbox.gd" id="3_afpow"]
 [ext_resource type="Material" uid="uid://ddlmyt3fnwd0" path="res://Materials/effects_material.tres" id="3_ghaa6"]
 [ext_resource type="Script" uid="uid://biwl5kl2flbi0" path="res://Scripts/hitbox.gd" id="4_287tu"]
-
-[sub_resource type="Resource" id="Resource_0830c"]
-script = ExtResource("2_0830c")
-health = 50
-metadata/_custom_type_script = "uid://ca8ippthsnrnx"
+[ext_resource type="PackedScene" uid="uid://byugb6qq4bpqt" path="res://Components/health_component.tscn" id="5_0830c"]
 
 [sub_resource type="Animation" id="Animation_1dp5w"]
 length = 0.001
@@ -48,10 +43,9 @@ _data = {
 &"hit_flash": SubResource("Animation_ghaa6")
 }
 
-[node name="Enemy-1" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_1f0kj")
-stats = SubResource("Resource_0830c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = ExtResource("3_ghaa6")
@@ -59,10 +53,11 @@ autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("3_afpow")
+health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://hjcul83e4hj"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
@@ -72,7 +67,6 @@ debug_color = Color(1, 0, 0, 0.419608)
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("4_287tu")
-damage = 20.0
 metadata/_custom_type_script = "uid://biwl5kl2flbi0"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
@@ -83,3 +77,5 @@ root_node = NodePath("../AnimatedSprite2D")
 libraries = {
 &"": SubResource("AnimationLibrary_auwsv")
 }
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_0830c")]

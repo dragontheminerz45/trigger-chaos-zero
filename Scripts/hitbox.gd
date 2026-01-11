@@ -1,6 +1,6 @@
 class_name Hitbox extends Area2D
 
-@export var damage := 1.0
+@export var damage: int = 10
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)

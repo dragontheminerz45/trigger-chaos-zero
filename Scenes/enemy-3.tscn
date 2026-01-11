@@ -100,3 +100,6 @@ shape = SubResource("RectangleShape2D_3hjdh")
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 position = Vector2(0, -17)
 shape = SubResource("RectangleShape2D_efw74")
+
+[node name="HealthComponent" parent="." index="6"]
+max_health = 40

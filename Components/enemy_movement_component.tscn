@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf55dhe4edkff"]
+
+[ext_resource type="Script" uid="uid://tclsbcvfp2x7" path="res://Components/movement_component.gd" id="1_kyslj"]
+
+[node name="MovementComponent" type="Node" node_paths=PackedStringArray("actor", "sprite", "ray_cast_left", "ray_cast_right")]
+script = ExtResource("1_kyslj")
+actor = NodePath("")
+sprite = NodePath("")
+direction = Vector2(-1, 0)
+ray_cast_left = NodePath("")
+ray_cast_right = NodePath("")

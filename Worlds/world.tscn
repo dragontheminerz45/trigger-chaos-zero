@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://2t6vt6ojlvwp"]
+[gd_scene load_steps=22 format=4 uid="uid://2t6vt6ojlvwp"]
 
 [ext_resource type="PackedScene" uid="uid://bdsfyxa45e6cs" path="res://Scenes/player.tscn" id="1_4xfh2"]
 [ext_resource type="Script" uid="uid://dcnqgao663yf6" path="res://Worlds/world1.gd" id="1_07imi"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ct8wsqkpd0f7d" path="res://Scenes/enemy-2.tscn" id="9_25de1"]
 [ext_resource type="Script" uid="uid://biwl5kl2flbi0" path="res://Scripts/hitbox.gd" id="10_4qppp"]
 [ext_resource type="PackedScene" uid="uid://b11s0rec7hpc5" path="res://Scenes/enemy-3.tscn" id="12_5n3ns"]
+[ext_resource type="Shader" uid="uid://cajlvtynsowby" path="res://Materials/effects_material.gdshader" id="12_25de1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7rtbg"]
 bg_color = Color(0, 0, 0, 0.513726)
@@ -47,12 +48,18 @@ size = Vector2(16, 96)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4qppp"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5n3ns"]
+resource_local_to_scene = true
+shader = ExtResource("12_25de1")
+shader_parameter/flash_enabled = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
 [node name="world1" type="Node2D"]
 script = ExtResource("1_07imi")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HealthBar" type="ProgressBar" parent="CanvasLayer"]
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("player")]
 offset_left = 24.0
 offset_top = 8.0
 offset_right = 108.0
@@ -62,6 +69,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_fuoa0")
 value = 100.0
 show_percentage = false
 script = ExtResource("4_fuoa0")
+player = NodePath("../../Player")
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 offset_left = 8.0
@@ -168,7 +176,7 @@ position = Vector2(0, 256)
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("10_4qppp")
-damage = 99999.0
+damage = 1000000
 metadata/_custom_type_script = "uid://biwl5kl2flbi0"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
@@ -181,15 +189,21 @@ position = Vector2(368, 160)
 position = Vector2(736, 160)
 
 [node name="Enemy-3" parent="." instance=ExtResource("9_25de1")]
-position = Vector2(1056, 32)
+position = Vector2(1056, 0)
 
 [node name="Enemy-4" parent="." instance=ExtResource("12_5n3ns")]
 position = Vector2(672, 0)
 
 [node name="Boss" parent="." instance=ExtResource("3_fuoa0")]
-position = Vector2(1520, 128)
+position = Vector2(1520, 126)
 scale = Vector2(2.5, 2.5)
 
-[connection signal="health_change" from="Player" to="CanvasLayer/HealthBar" method="_on_player_health_change"]
+[node name="AnimatedSprite2D" parent="Boss" index="0"]
+material = SubResource("ShaderMaterial_5n3ns")
+
+[node name="EnemyMovementComponent" parent="Boss" index="6"]
+stationary = true
+
 [connection signal="body_entered" from="BossArea" to="." method="_on_boss_area_body_entered"]
-[connection signal="defeated" from="Boss" to="." method="_on_boss_defeated"]
+
+[editable path="Boss"]
