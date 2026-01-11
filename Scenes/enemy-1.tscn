@@ -1,0 +1,89 @@
+[gd_scene load_steps=15 format=3 uid="uid://cglxs22nc8gkl"]
+
+[ext_resource type="PackedScene" uid="uid://cunke6kopf13v" path="res://Scenes/enemy.tscn" id="1_lssre"]
+[ext_resource type="Shader" uid="uid://cajlvtynsowby" path="res://Materials/effects_material.gdshader" id="2_wlnc2"]
+[ext_resource type="Texture2D" uid="uid://084qx7s5gcpe" path="res://Sprites/enemy_1.png" id="3_hmo6u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_arec4"]
+resource_local_to_scene = true
+shader = ExtResource("2_wlnc2")
+shader_parameter/flash_enabled = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v73nf"]
+atlas = ExtResource("3_hmo6u")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ya6xy"]
+atlas = ExtResource("3_hmo6u")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y27sj"]
+atlas = ExtResource("3_hmo6u")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_imqlt"]
+atlas = ExtResource("3_hmo6u")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybxfi"]
+atlas = ExtResource("3_hmo6u")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ikxr"]
+atlas = ExtResource("3_hmo6u")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s71u0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v73nf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ya6xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y27sj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_imqlt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ybxfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ikxr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bngyt"]
+size = Vector2(28, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c30wr"]
+size = Vector2(32, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xfaib"]
+size = Vector2(26, 25)
+
+[node name="Enemy-1" instance=ExtResource("1_lssre")]
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_arec4")
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_s71u0")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, -13)
+shape = SubResource("RectangleShape2D_bngyt")
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_c30wr")
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(0, -12.5)
+shape = SubResource("RectangleShape2D_xfaib")

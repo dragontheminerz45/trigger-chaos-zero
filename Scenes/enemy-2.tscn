@@ -1,0 +1,89 @@
+[gd_scene load_steps=15 format=3 uid="uid://ct8wsqkpd0f7d"]
+
+[ext_resource type="PackedScene" uid="uid://cunke6kopf13v" path="res://Scenes/enemy.tscn" id="1_pc02i"]
+[ext_resource type="Shader" uid="uid://cajlvtynsowby" path="res://Materials/effects_material.gdshader" id="2_ig5ou"]
+[ext_resource type="Texture2D" uid="uid://vbtfxqbqhp8w" path="res://Sprites/enemy_2.png" id="4_sup4l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_slcnj"]
+resource_local_to_scene = true
+shader = ExtResource("2_ig5ou")
+shader_parameter/flash_enabled = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sup4l"]
+atlas = ExtResource("4_sup4l")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_win2k"]
+atlas = ExtResource("4_sup4l")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8afha"]
+atlas = ExtResource("4_sup4l")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v1krp"]
+atlas = ExtResource("4_sup4l")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_doa1g"]
+atlas = ExtResource("4_sup4l")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q785g"]
+atlas = ExtResource("4_sup4l")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qsku0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sup4l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_win2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8afha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v1krp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_doa1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q785g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2skcx"]
+size = Vector2(16, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vchu4"]
+size = Vector2(19, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c6koq"]
+size = Vector2(14, 10)
+
+[node name="Enemy-2" instance=ExtResource("1_pc02i")]
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_slcnj")
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_qsku0")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_2skcx")
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0.5, -9.5)
+shape = SubResource("RectangleShape2D_vchu4")
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_c6koq")
