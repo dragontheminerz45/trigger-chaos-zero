@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://da1ajnl2b0m34"]
 
 [ext_resource type="Script" uid="uid://d00pryw6c4s7b" path="res://Scripts/bullet.gd" id="1_oduel"]
-[ext_resource type="Texture2D" uid="uid://bl0l4vkc8pqyd" path="res://icon.svg" id="1_xjght"]
+[ext_resource type="Texture2D" uid="uid://cwhw6efcsapdc" path="res://Sprites/bullet_player.png" id="2_ycag2"]
 [ext_resource type="Script" uid="uid://biwl5kl2flbi0" path="res://Scripts/hitbox.gd" id="3_ycag2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6afsh"]
@@ -14,8 +14,7 @@ z_index = -1
 script = ExtResource("1_oduel")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.0625, 0.015625)
-texture = ExtResource("1_xjght")
+texture = ExtResource("2_ycag2")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-4, 0)
